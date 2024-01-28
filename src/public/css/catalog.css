@@ -4,7 +4,7 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background: url("../images/background.jpg");
+    background: url("../image/background.jpg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -22,8 +22,7 @@ ul {
     padding-inline-start: 0;
 }
 
-input[type=submit]:hover,
-ul>li:hover {
+input[type=submit]:hover, ul>li:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
@@ -48,7 +47,7 @@ nav {
     padding-top: 0;
 }
 
-nav>ul {
+nav > ul {
     text-align: center;
     margin: 0 5px;
     color: white;
@@ -100,7 +99,7 @@ footer {
     width: 100%;
 }
 
-#viewCatalog {
+#viewCatalog{
     margin-bottom: 5%;
     margin-top: 3%;
 }

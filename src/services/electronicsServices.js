@@ -1,12 +1,12 @@
-// const Courses = require('../models/Course');
+const Electronics = require('../models/Electronics');
 
-// exports.create = (coursesData) => Courses.create(coursesData);
+exports.create = (itemData) => Electronics.create(itemData);
+
+exports.getAll = () => Electronics.find().lean();
 
 // exports.getLastThreeCourses = () => Courses.find().sort({ _id: -1 }).limit(3).lean();
 
 // exports.getOne = (courseId) => Courses.findById(courseId);
-
-// exports.getAll = () => Courses.find().lean();
 
 // exports.delete = (courseId) => Courses.findByIdAndDelete(courseId);
 
