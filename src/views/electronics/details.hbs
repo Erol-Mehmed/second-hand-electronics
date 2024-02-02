@@ -17,8 +17,8 @@
 
         {{#if isOwner}}
           <!--If user is owner-->
-          <a href="#" class="edit-btn">Edit</a>
-          <a href="#" class="delete-btn">Delete</a>
+          <a href="/electronics/edit/{{electronic._id}}" class="edit-btn">Edit</a>
+          <a href="/electronics/delete/{{electronic._id}}" class="delete-btn">Delete</a>
         {{else}}
           {{#if isBought}}
             <!--If user is not the owner and is bought this toy-->

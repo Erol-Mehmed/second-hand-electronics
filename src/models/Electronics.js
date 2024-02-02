@@ -28,13 +28,13 @@ let electronicsSchema = new mongoose.Schema({
         maxLength: 200,
     },
     production: {
-        type: String,
+        type: Number,
         required: true,
         min: 1900,
         max: 2023,
     },
     exploitation: {
-        type: String,
+        type: Number,
         required: true,
         min: 0,
     },

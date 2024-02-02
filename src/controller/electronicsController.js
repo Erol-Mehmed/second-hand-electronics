@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const electronicsService = require('../services/electronicsServices');
+const Electronics = require('../models/Electronics');
 
 router.get('/catalog', async (req, res) => {
     const electronics = await electronicsService.getAll();
@@ -27,9 +28,9 @@ router.get('/details/:electronicId', async (req, res) => {
     }
 
     const electronic = await electronicsService.getOne(req.params.electronicId);
-    const isBought = electronic.buyingList.includes(req.user._id);
+    const isBought = electronic.buyingList.includes(req.user?._id);
 
-    res.render('electronics/details', { electronic, isBought });
+    res.render('electronics/details', { electronic, isOwner: req.user?._id == electronic.owner, isBought });
 });
 
 router.get('/delete/:electronicId', isOwner, async (req, res) => {
@@ -39,16 +40,27 @@ router.get('/delete/:electronicId', isOwner, async (req, res) => {
 });
 
 router.get('/edit/:electronicId', isOwner, async (req, res) => {
+    const electronic = await electronicsService.getOne(req.params.electronicId);
 
+    res.render('electronics/edit', { electronic });
 });
 
-router.post('/edit/:electronicId', async (req, res) => {
+router.post('/edit/:electronicId', isOwner, async (req, res) => {
+    try {
+        await Electronics.validate(req.body);
+        await electronicsService.updateOne(req.params.electronicId, req.body);
 
+        res.redirect('/electronics/details/' + req.params.electronicId);
+    } catch (error) {
+        const electronic = req.body;
+        electronic._id = req.params.electronicId;
+
+        res.render('electronics/edit', { error: getErrorMessage(error), electronic });
+    }
 });
 
 async function isOwner(req, res, next) {
-    const electronic = await electronicsService.getOne(req.params.electronicId);
-    const electronicData = electronic.toObject();
+    const electronicData = await electronicsService.getOne(req.params.electronicId);
     const isOwner = electronicData.owner == req.user?._id;
 
     if (isOwner) {

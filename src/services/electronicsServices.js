@@ -8,6 +8,6 @@ exports.getOne = (electronicId) => Electronics.findById(electronicId).lean();
 
 exports.addToBuyingList = (electronicId, userId) => Electronics.findByIdAndUpdate(electronicId, { $addToSet: { buyingList: userId } });
 
-// exports.delete = (electronicId) => Courses.findByIdAndDelete(electronicId);
+exports.delete = (electronicId) => Electronics.findByIdAndDelete(electronicId);
 
-// exports.updateOne = (electronicId, coursesData) => Courses.findByIdAndUpdate(electronicId, coursesData);
+exports.updateOne = (electronicId, electronicData) => Electronics.findByIdAndUpdate(electronicId, electronicData);
