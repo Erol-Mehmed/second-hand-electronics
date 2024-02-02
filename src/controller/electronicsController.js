@@ -16,38 +16,46 @@ router.post('/create', async (req, res) => {
 
         res.redirect('/electronics/catalog');
     } catch (error) {
-        res.render('electronics/create', { error: getErrorMessage(error), itemData: req.body });
+        res.render('electronics/create', { error: getErrorMessage(error), electronicData: req.body });
     }
 });
 
-router.get('/details/:courseId', async (req, res) => {
+router.get('/details/:electronicId', async (req, res) => {
+    if (req.query.buyElectronic) {
+        await electronicsService.addToBuyingList(req.params.electronicId, req.user._id);
+        res.redirect(`/electronics/details/${req.params.electronicId}`);
+    }
 
+    const electronic = await electronicsService.getOne(req.params.electronicId);
+    const isBought = electronic.buyingList.includes(req.user._id);
+
+    res.render('electronics/details', { electronic, isBought });
 });
 
-router.get('/delete/:courseId', isOwner, async (req, res) => {
-    await electronicsService.delete(req.params.courseId);
+router.get('/delete/:electronicId', isOwner, async (req, res) => {
+    await electronicsService.delete(req.params.electronicId);
 
     res.redirect('/electronics/catalog');
 });
 
-router.get('/edit/:courseId', isOwner, async (req, res) => {
+router.get('/edit/:electronicId', isOwner, async (req, res) => {
 
 });
 
-router.post('/edit/:courseId', async (req, res) => {
+router.post('/edit/:electronicId', async (req, res) => {
 
 });
 
 async function isOwner(req, res, next) {
-    // const item = await electronicsService.getOne(req.params.courseId);
-    // const courseData = course.toObject();
-    // const isOwner = courseData.owner == req.user?._id;
+    const electronic = await electronicsService.getOne(req.params.electronicId);
+    const electronicData = electronic.toObject();
+    const isOwner = electronicData.owner == req.user?._id;
 
-    // if (isOwner) {
-    //     next()
-    // } else {
-    //     res.render('404');
-    // }
+    if (isOwner) {
+        next()
+    } else {
+        res.render('404');
+    }
 };
 
 function getErrorMessage(error) {

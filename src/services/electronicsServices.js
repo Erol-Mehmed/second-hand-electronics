@@ -1,15 +1,13 @@
 const Electronics = require('../models/Electronics');
 
-exports.create = (itemData) => Electronics.create(itemData);
+exports.create = (electronicData) => Electronics.create(electronicData);
 
 exports.getAll = () => Electronics.find().lean();
 
-// exports.getLastThreeCourses = () => Courses.find().sort({ _id: -1 }).limit(3).lean();
+exports.getOne = (electronicId) => Electronics.findById(electronicId).lean();
 
-// exports.getOne = (courseId) => Courses.findById(courseId);
+exports.addToBuyingList = (electronicId, userId) => Electronics.findByIdAndUpdate(electronicId, { $addToSet: { buyingList: userId } });
 
-// exports.delete = (courseId) => Courses.findByIdAndDelete(courseId);
+// exports.delete = (electronicId) => Courses.findByIdAndDelete(electronicId);
 
-// exports.updateOne = (courseId, coursesData) => Courses.findByIdAndUpdate(courseId, coursesData);
-
-// exports.enroll = (courseId, userId, username) => Courses.findByIdAndUpdate(courseId, { $addToSet: { signUpList: { userId, username } } });
+// exports.updateOne = (electronicId, coursesData) => Courses.findByIdAndUpdate(electronicId, coursesData);

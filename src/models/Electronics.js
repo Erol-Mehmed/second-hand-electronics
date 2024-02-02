@@ -36,17 +36,19 @@ let electronicsSchema = new mongoose.Schema({
     exploitation: {
         type: String,
         required: true,
-        min: 0,  
+        min: 0,
     },
     price: {
         type: Number,
         required: true,
         min: 0,
     },
-    buyingList: [{
-        type: mongoose.Types.ObjectId,
-        ref: 'User',
-    }],
+    buyingList: [
+        {
+            type: String,
+            required: true,
+        }
+    ],
     owner: {
         type: mongoose.Types.ObjectId,
         ref: 'User',
