@@ -8,6 +8,10 @@ router.get('/catalog', async (req, res) => {
 });
 
 router.get('/create', (req, res) => {
+    if (!req.user) {
+        res.redirect('/404');
+    }
+
     res.render('electronics/create');
 });
 

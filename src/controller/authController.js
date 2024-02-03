@@ -49,7 +49,7 @@ router.post('/register', isGuest, async (req, res) => {
         res.redirect('/');
     } catch (error) {
         console.log(error);
-        res.render('auth/register', { error: error.message});
+        res.render('auth/register', { error: error.message });
     }
 
 });
